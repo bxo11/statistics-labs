@@ -28,7 +28,7 @@ def polar_method_normal_distribution():
         yield z0
 
 
-points_anount = 100
+points_anount = 500
 x = np.linspace(-5, 5, points_anount)
 y = []
 wariancja = 1
@@ -49,6 +49,6 @@ for i in range(points_anount):
 
 print(f'Srednia: {calculate_avg(hist_data)}')
 print(f'Wariancja: {calculate_variance(hist_data)}')
-plt.hist(hist_data, density=True, bins=15)
+plt.hist(hist_data, density=True, bins=25)
 plt.plot(x, y, marker='o')
 plt.show()
