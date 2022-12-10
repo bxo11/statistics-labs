@@ -48,22 +48,35 @@ def ruin_prob(data, N, player='A'):
 def B():
     x = []
     y = []
+    y2 = []
     prob_a = 0.25
+    a = 10
+    b = 10
     for i in range(50):
         prob_tmp = prob_a + i / 100
-        r = ruin(a=10, b=10, prob_a=prob_tmp, N=1000)
+        r = ruin(a=a, b=b, prob_a=prob_tmp, N=1000)
         y.append(r['pWinB'])
         x.append(prob_tmp)
+        l = ((1 - prob_tmp) / prob_tmp) ** a - ((1 - prob_tmp) / prob_tmp) ** (a + b)
+        m = 1 - ((1 - prob_tmp) / prob_tmp) ** (a + b)
+        if prob_tmp == 0.5:
+            y2.append(1 - a / (a + b))
+        else:
+            y2.append(l / m)
 
     plt.plot(x, y, marker='o')
     plt.xlabel('prawdopodobieństwo wygranej w jednej rozgrywce pA')
     plt.ylabel('prawdopodobieństwa ruiny gracza A')
+
+    plt.plot(x, y2, marker='x')
+
     plt.show()
 
 
 def C():
     x = []
     y = []
+    y2 = []
     start_a = 10
     for i in range(80):
         a_temp = start_a + i
@@ -73,7 +86,15 @@ def C():
         plt.ylabel('prawdopodobieństwa ruiny gracza A')
         x.append(a_temp)
 
+        l = ((1 - 0.5) / 0.5) ** a_temp - ((1 - 0.5) / 0.5) ** (a_temp + (100 - a_temp))
+        m = 1 - ((1 - 0.5) / 0.5) ** (a_temp + (100 - a_temp))
+        if 0.5 == 0.5:
+            y2.append(1 - a_temp / (a_temp + (100 - a_temp)))
+        else:
+            y2.append(l / m)
+
     plt.plot(x, y, marker='o')
+    plt.plot(x, y2, marker='x')
     plt.show()
 
 
@@ -117,6 +138,7 @@ def F():
 
     plt.hist(x, density=True, bins=50)
     plt.show()
+
 
 def F2():
     # Set the number of simulations to run and the number of games per simulation
@@ -169,4 +191,4 @@ def G():
     plt.show()
 
 
-F2()
+C()
