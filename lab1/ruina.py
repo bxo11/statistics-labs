@@ -11,7 +11,7 @@ def trial(prob=0.5):
     return False
 
 
-def ruin(a=100, b=100, prob_a=0.5, N=20000, save_balance=False):
+def ruin(a=100, b=100, prob_a=0.5, N=1, save_balance=False):
     results = {'winsA': 0, 'winsB': 0, 'pA': prob_a, 'N': N, 'iterations': []}
     if save_balance:
         results['balance_A'] = [[] for _ in range(N)]
@@ -100,8 +100,8 @@ def E():
         x.append(prob_tmp)
 
     plt.plot(x, y, marker='o')
-    plt.xlabel('maksymalna dlugosc rozgrywek')
-    plt.ylabel('prawdopodobieństwa ruiny gracza A')
+    plt.ylabel('maksymalna dlugosc rozgrywek')
+    plt.xlabel('prawdopodobieństwa ruiny gracza A')
     plt.show()
 
 
@@ -112,14 +112,35 @@ def F():
     n_list = [2, 10, 20, 50, 100]
     for p in prop:
         for n in n_list:
-            r = ruin(a=50, b=50, prob_a=p, N=20000)
+            r = ruin(a=50, b=50, prob_a=p, N=10000)
             x.extend(r['iterations'])
 
     plt.hist(x, density=True, bins=50)
     plt.show()
 
+def F2():
+    # Set the number of simulations to run and the number of games per simulation
+    N = 2
+    n = 10
 
-# niegotowe
+    # Set the starting balances and probability of player A winning a point
+    a = b = 50
+    pA = 0.5
+
+    # Run the simulations and store the results
+    results = ruin(a=a, b=b, prob_a=pA, N=N, save_balance=True)
+
+    # Extract the final balance of player A from each simulation
+    final_balances = [results['balance_A'][i][-1] for i in range(N)]
+
+    # Use Matplotlib to create a histogram of the final balances
+    import matplotlib.pyplot as plt
+    plt.hist(final_balances, bins=range(0, a + b + 1))
+    plt.xlabel('Final balance of player A')
+    plt.ylabel('Probability')
+    plt.show()
+
+
 def G():
     x = []
     y = []
@@ -132,5 +153,20 @@ def G():
     plt.ylabel('prawdopodobieństwa ruiny gracza A')
     plt.show()
 
+    #################
+    x = []
+    y = []
+    wins = 0
+    for i in range(10):
+        r = ruin(a=50, b=50, prob_a=0.5, N=1, save_balance=True)
+        wins += r['winsA']
+        y.append(wins)
+        x.append(i)
 
-G()
+    plt.plot(x, y, marker='o')
+    plt.xlabel('numer rozgrywki')
+    plt.ylabel('ilosc wygranych gracza A')
+    plt.show()
+
+
+F2()
