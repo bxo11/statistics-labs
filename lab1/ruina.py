@@ -51,7 +51,7 @@ def B():
     y2 = []
     prob_a = 0.25
     a = 10
-    b = 10
+    b = 90
     for i in range(50):
         prob_tmp = prob_a + i / 100
         r = ruin(a=a, b=b, prob_a=prob_tmp, N=1000)
@@ -78,17 +78,18 @@ def C():
     y = []
     y2 = []
     start_a = 10
+    prob_a=0.5
     for i in range(80):
         a_temp = start_a + i
-        r = ruin(a=a_temp, b=100 - a_temp, prob_a=0.5, N=1000)
+        r = ruin(a=a_temp, b=100 - a_temp, prob_a=prob_a, N=200)
         y.append(r['pWinB'])
         plt.xlabel('poczatkowy kapital a')
         plt.ylabel('prawdopodobieństwa ruiny gracza A')
         x.append(a_temp)
 
-        l = ((1 - 0.5) / 0.5) ** a_temp - ((1 - 0.5) / 0.5) ** (a_temp + (100 - a_temp))
-        m = 1 - ((1 - 0.5) / 0.5) ** (a_temp + (100 - a_temp))
-        if 0.5 == 0.5:
+        l = ((1 - prob_a) / prob_a) ** a_temp - ((1 - prob_a) / prob_a) ** (a_temp + (100 - a_temp))
+        m = 1 - ((1 - prob_a) / prob_a) ** (a_temp + (100 - a_temp))
+        if prob_a == 0.5:
             y2.append(1 - a_temp / (a_temp + (100 - a_temp)))
         else:
             y2.append(l / m)
@@ -102,12 +103,13 @@ def D():
     x = []
     prop = [0.2, 0.5, 0.8]
     for p in prop:
+        x = []
         r = ruin(a=50, b=50, prob_a=p, N=20000)
         x.extend(r['iterations'])
         print(f"Srednia dlugosc rozgrywki dla p: {p} - {calculate_avg(r['iterations'])}")
 
-    plt.hist(x, density=True, bins=50)
-    plt.show()
+        plt.hist(x, density=False, bins=50)
+        plt.show()
 
 
 def E():
@@ -166,7 +168,8 @@ def F2():
 def G():
     x = []
     y = []
-    r = ruin(a=50, b=50, prob_a=0.2, N=1, save_balance=True)
+    prob_a = 0.5
+    r = ruin(a=50, b=50, prob_a=prob_a, N=1, save_balance=True)
     y.extend(r['balance_A'][0])
     x.extend([i for i in range(len(y))])
 
@@ -180,7 +183,7 @@ def G():
     y = []
     wins = 0
     for i in range(10):
-        r = ruin(a=50, b=50, prob_a=0.5, N=1, save_balance=True)
+        r = ruin(a=50, b=50, prob_a=prob_a, N=1, save_balance=True)
         wins += r['winsA']
         y.append(wins)
         x.append(i)

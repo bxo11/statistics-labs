@@ -17,15 +17,15 @@ def polar():
     return y1
 
 
-def polar_method_normal_distribution():
-    while True:
-        u1, u2 = 0, 0
-        while u1 == 0:
-            u1 = random.random()
-        while u2 == 0:
-            u2 = random.random()
-        z0 = sqrt(-2 * log(u1)) * cos(2 * pi * u2)
-        yield z0
+# def polar_method_normal_distribution():
+#     while True:
+#         u1, u2 = 0, 0
+#         while u1 == 0:
+#             u1 = random.random()
+#         while u2 == 0:
+#             u2 = random.random()
+#         z0 = sqrt(-2 * log(u1)) * cos(2 * pi * u2)
+#         yield z0
 
 
 points_anount = 500

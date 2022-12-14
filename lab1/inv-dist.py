@@ -6,13 +6,13 @@ import numpy as np
 
 from utils import calculate_avg, calculate_variance
 
-def cauchy_gen():
-    while True:
-        x = random.uniform(-pi / 2, pi / 2)
-        y = random.uniform(0, 1)
-        cauchy = tan(x)
-        if y <= (1 / (1 + cauchy ** 2)):
-            return cauchy
+# def cauchy_gen():
+#     while True:
+#         x = random.uniform(-pi / 2, pi / 2)
+#         y = random.uniform(0, 1)
+#         cauchy = tan(x)
+#         if y <= (1 / (1 + cauchy ** 2)):
+#             return cauchy
 
 def cauchy_gen2(x0, gamma):
     u = np.random.uniform(0,1)
@@ -34,10 +34,14 @@ for i in range(points_anount):
     # hist_data.append(cauchy_gen())
     hist_data.append(cauchy_gen2(y0, gamma))
 
-hist_data = [number for number in hist_data if number < 5]
-hist_data = [number for number in hist_data if number > -5]
+
+
 print(f'Srednia: {calculate_avg(hist_data)}')
 print(f'Wariancja: {calculate_variance(hist_data)}')
+
+hist_data = [number for number in hist_data if number < 5]
+hist_data = [number for number in hist_data if number > -5]
+
 plt.hist(hist_data, density=True, bins=50)
 plt.plot(x, y, marker='o')
 plt.show()
