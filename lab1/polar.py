@@ -27,28 +27,28 @@ def polar():
 #         z0 = sqrt(-2 * log(u1)) * cos(2 * pi * u2)
 #         yield z0
 
+if __name__ == "__main__":
+    points_anount = 500
+    x = np.linspace(-5, 5, points_anount)
+    y = []
+    wariancja = 1
+    wartosc_oczekiwana = 0
+    for p in x:
+        mianownik = wariancja * sqrt(2 * pi)
+        wyk = -((pow(p - wartosc_oczekiwana, 2)) / (2 * pow(wariancja, 2)))
+        y.append((1 / mianownik) * exp(wyk))
 
-points_anount = 500
-x = np.linspace(-5, 5, points_anount)
-y = []
-wariancja = 1
-wartosc_oczekiwana = 0
-for p in x:
-    mianownik = wariancja * sqrt(2 * pi)
-    wyk = -((pow(p - wartosc_oczekiwana, 2)) / (2 * pow(wariancja, 2)))
-    y.append((1 / mianownik) * exp(wyk))
+    hist_data = []
+    for i in range(points_anount):
+        hist_data.append(polar())
 
-hist_data = []
-for i in range(points_anount):
-    hist_data.append(polar())
+    # for value in polar_method_normal_distribution():
+    #     if len(hist_data)>points_anount:
+    #         break
+    #     hist_data.append(value)
 
-# for value in polar_method_normal_distribution():
-#     if len(hist_data)>points_anount:
-#         break
-#     hist_data.append(value)
-
-print(f'Srednia: {calculate_avg(hist_data)}')
-print(f'Wariancja: {calculate_variance(hist_data)}')
-plt.hist(hist_data, density=True, bins=25)
-plt.plot(x, y, marker='o')
-plt.show()
+    print(f'Srednia: {calculate_avg(hist_data)}')
+    print(f'Wariancja: {calculate_variance(hist_data)}')
+    plt.hist(hist_data, density=True, bins=25)
+    plt.plot(x, y, marker='o')
+    plt.show()
