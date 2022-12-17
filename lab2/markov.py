@@ -1,6 +1,5 @@
 import copy
 import random
-from math import sqrt
 
 from matplotlib import pyplot as plt
 
@@ -79,7 +78,7 @@ def B():
 
 def CD():
     users = 100
-    start_logged_in_users = random.randint(0, 100)
+    start_logged_in_users = random.randint(0, users)
     login_probability = 0.2
     logout_probability = 0.5
     # logout_probability = 1 - (0.008 * start_logged_in_users + 0.1)
@@ -105,19 +104,20 @@ def CD():
         maximum = max(temp_values)
         top_five.append(maximum)
         temp_values.remove(maximum)
-    plt.plot([i for i in range(5)], top_five, marker='o')
+    plt.plot([i for i in range(5)], [x / N for x in top_five], marker='o')
     plt.title(f'start: {start_logged_in_users}')
     plt.xlabel('')
     plt.ylabel('')
 
     plt.show()
 
-    plt.plot([i for i in range(users)], visits, marker='o')
+    plt.plot([i for i in range(users)], [x / N for x in visits], marker='o')
     plt.title(f'start: {start_logged_in_users}')
     plt.xlabel('N')
     plt.ylabel('')
 
     plt.show()
 
-
+# A()
+# B()
 CD()

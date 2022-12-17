@@ -128,43 +128,6 @@ def E():
     plt.show()
 
 
-# niegotowe
-def F():
-    x = []
-    prop = [0.2, 0.5, 0.8]
-    n_list = [2, 10, 20, 50, 100]
-    for p in prop:
-        for n in n_list:
-            r = ruin(a=50, b=50, prob_a=p, N=10000)
-            x.extend(r['iterations'])
-
-    plt.hist(x, density=True, bins=50)
-    plt.show()
-
-
-def F2():
-    # Set the number of simulations to run and the number of games per simulation
-    N = 2
-    n = 10
-
-    # Set the starting balances and probability of player A winning a point
-    a = b = 50
-    pA = 0.5
-
-    # Run the simulations and store the results
-    results = ruin(a=a, b=b, prob_a=pA, N=N, save_balance=True)
-
-    # Extract the final balance of player A from each simulation
-    final_balances = [results['balance_A'][i][-1] for i in range(N)]
-
-    # Use Matplotlib to create a histogram of the final balances
-    import matplotlib.pyplot as plt
-    plt.hist(final_balances, bins=range(0, a + b + 1))
-    plt.xlabel('Final balance of player A')
-    plt.ylabel('Probability')
-    plt.show()
-
-
 def G():
     x = []
     y = []

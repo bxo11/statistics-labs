@@ -38,15 +38,16 @@ for t in t_list:
 
     plt.plot([i + 1 for i in range(t * lam + 1)], poisson_distribution, marker='o')
     plt.axvline(events, color='r')
+    plt.title(f't = {t}, porownanie rozkladu Poissona z parametrem')
     plt.xlabel('')
     plt.ylabel('')
     plt.show()
 
 for t in t_list:
     events = poisson_simulation(lam, t, 10000)
-    print(f'Wartość średnia dla t = {t} różni się od oczekiwanej: {calculate_avg(poisson_simulation(lam, t))} != {lam * t}')
+    print(f'Wartość średnia dla t = {t}: {calculate_avg(poisson_simulation(lam, t))} != {lam * t}')
     counts, values = np.histogram(events)
     probabilities = counts / len(events)
     plt.bar(values[:-1], probabilities, width=1)
-    plt.title(t)
+    plt.title(f't = {t}, rozkład prawdopodobieństwa ilości zdarzeń')
     plt.show()
