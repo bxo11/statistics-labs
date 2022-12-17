@@ -11,3 +11,9 @@ def calculate_variance(sequence):
     for element in sequence:
         suma_kwadratow_odchylen += (element - average) ** 2
     return suma_kwadratow_odchylen / len(sequence)
+
+def calculate_sum(sequence):
+    result = 0
+    for a in sequence:
+        result+=a
+    return result
