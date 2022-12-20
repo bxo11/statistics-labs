@@ -1,0 +1,111 @@
+import copy
+import math
+import random
+
+import numpy as np
+from matplotlib import pyplot as plt
+
+from utils import calculate_avg, calculate_sum
+
+# must be float number
+lambdaA = 2.
+lambdaD = 5.
+
+tasks = 10
+arrival = []
+done = []
+waiting = []
+
+for i in range(tasks):
+    n = random.random()  # TODO: rozne czy te same n?
+    tiA = -math.log(n) / lambdaA
+    n = random.random()
+    tiD = -math.log(n) / lambdaD
+    A = (0 if i == 0 else arrival[i - 1]) + tiA
+    D = (tiA + tiD if i == 0 else max(done[i - 1], A) + tiD)
+    arrival.append(A)
+    done.append(D)
+    waiting.append(D - A)
+
+plt.plot(arrival, [x for x in range(tasks)], marker='o')
+plt.plot(done, [x for x in range(tasks)], marker='x')
+plt.xlabel('czas')
+plt.ylabel('numer zadania')
+plt.show()
+
+queue = 0
+
+queue_history1 = []
+queue_history_time1 = []
+queue_history2 = []
+queue_history_time2 = []
+task_done = 0
+task_done_history = []
+task_done_history_time = []
+arrival_copy = copy.deepcopy(arrival)
+done_copy = copy.deepcopy(done)
+a = arrival.pop(0)
+d = done.pop(0)
+arrival.append(arrival[-1]) # duplicate last element no to lose it in the next loop
+done.append(done[-1]) # duplicate last element no to lose it in the next loop
+waiting_queue1 = []
+waiting_queue2 = []
+one =0
+two =0
+time_queue = 0
+while len(arrival) > 0 or len(done) > 0:
+    if a <= d and len(arrival) > 0 :
+        if len(arrival) > 0:
+            time_queue += waiting[one]
+            one += 1
+            queue += 1
+            queue_history_time1.append(a)
+            queue_history1.append(queue)
+            task_done_history_time.append(a)
+            waiting_queue1.append(time_queue)
+            a = arrival.pop(0)
+    else:
+        if queue > 0:
+            time_queue -= waiting[two]
+            two += 1
+            queue -= 1
+            task_done+=1
+            queue_history_time2.append(d)
+            queue_history2.append(queue)
+            task_done_history_time.append(d)
+            waiting_queue2.append(time_queue)
+            d = done.pop(0)
+    task_done_history.append(task_done)
+
+plt.plot(queue_history_time1, queue_history1, linestyle='None', marker='o')
+plt.plot(queue_history_time2, queue_history2, linestyle='None', marker='x')
+plt.xlabel('')
+plt.ylabel('ilosc zadan w kolejce')
+plt.show()
+
+plt.plot([x for x in range(tasks)], waiting, marker='o')
+plt.xlabel('numer zadania')
+plt.ylabel('Czas oczekiwania na wykonanie')
+plt.show()
+
+plt.plot(task_done_history_time, task_done_history, marker='o')
+plt.xlabel('')
+plt.ylabel('Liczba wykonanych zadan')
+plt.show()
+
+def calculate_avg_queue(sequence1, sequence2):
+    suma = 0
+    for i in range(len(sequence1)):
+        suma += sequence1[i]*sequence2[i]
+    sum = calculate_sum(sequence1)
+    return suma / sum
+
+
+avg_waiting = calculate_avg(waiting)
+avg_queue = (calculate_avg(queue_history1) + calculate_avg(queue_history2))/2
+# avg_queue1 = calculate_avg_queue(waiting_queue1,queue_history1)
+# avg_queue2 = calculate_avg_queue(waiting_queue2,queue_history2)
+# avg_queue = (avg_queue1 + avg_queue2)/2
+print(f'Sredni czas spedzony przez zadanie w systemie: {avg_waiting}')
+print(f'Sredni ilosc zadan w kolejce: {avg_queue}')
+print(f'Prawo Little: {avg_waiting * lambdaA} = {avg_queue}')
