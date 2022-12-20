@@ -6,15 +6,14 @@ import numpy as np
 from matplotlib import pyplot as plt
 
 # must be float number
-lambdaA = 3.
-lambdaD = 0.5
+lambdaA = 2.
+lambdaD = 2.5
 
 tasks = 10
 arrival = []
 done = []
 waiting = []
 
-time = tasks / min(lambdaA, lambdaD)
 for i in range(tasks):
     n = random.random()  # TODO: rozne czy te same n?
     tiA = -math.log(n) / lambdaA
