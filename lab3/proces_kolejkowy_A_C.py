@@ -71,7 +71,6 @@ plt.ylabel('ilosc zadan w kolejce')
 plt.show()
 
 plt.plot([x for x in range(tasks)], waiting, marker='o')
-plt.xlabel('numer zadania')
 plt.ylabel('Czas oczekiwania na wykonanie')
 plt.show()
 

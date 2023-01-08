@@ -139,7 +139,7 @@ def CD():
     plt.show()
 
     plt.plot([i for i in range(users)], [x / N for x in visits], marker='o')
-    plt.title(f'Wykres wszystkich wartosci, start logged users: {start_logged_in_users}')
+    plt.title(f'Wykres koncowych wartosci dla wszystkich pi, start logged users: {start_logged_in_users}')
     plt.xlabel('N')
     plt.ylabel('')
 

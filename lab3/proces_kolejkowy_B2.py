@@ -102,10 +102,12 @@ def calculate_avg_queue(sequence1, sequence2):
 
 
 avg_waiting = calculate_avg(waiting)
-avg_queue = (calculate_avg(queue_history1) + calculate_avg(queue_history2))/2
-# avg_queue1 = calculate_avg_queue(waiting_queue1,queue_history1)
-# avg_queue2 = calculate_avg_queue(waiting_queue2,queue_history2)
-# avg_queue = (avg_queue1 + avg_queue2)/2
+# avg_queue = (calculate_avg(queue_history1) + calculate_avg(queue_history2))/2
+# waiting_queue1.extend(waiting_queue2)
+# queue_history1.extend(queue_history2)
+avg_queue1 = calculate_avg_queue(queue_history_time1,queue_history1)
+avg_queue2 = calculate_avg_queue(queue_history_time2,queue_history2)
+avg_queue = (avg_queue1 + avg_queue2)/2
 print(f'Sredni czas spedzony przez zadanie w systemie: {avg_waiting}')
 print(f'Sredni ilosc zadan w kolejce: {avg_queue}')
 print(f'Prawo Little: {avg_waiting * lambdaA} = {avg_queue}')
