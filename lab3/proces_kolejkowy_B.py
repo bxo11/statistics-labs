@@ -9,7 +9,7 @@ from utils import calculate_avg, calculate_sum
 lambdaA = 2.
 lambdaD = 5.
 
-tasks = 1000
+tasks = 10
 arrival = []
 done = []
 waiting = []

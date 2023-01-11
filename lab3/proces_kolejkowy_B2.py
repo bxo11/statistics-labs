@@ -27,11 +27,11 @@ for i in range(tasks):
     done.append(D)
     waiting.append(D - A)
 
-plt.plot(arrival, [x for x in range(tasks)], marker='o')
-plt.plot(done, [x for x in range(tasks)], marker='x')
-plt.xlabel('czas')
-plt.ylabel('numer zadania')
-plt.show()
+# plt.plot(arrival, [x for x in range(tasks)], marker='o')
+# plt.plot(done, [x for x in range(tasks)], marker='x')
+# plt.xlabel('czas')
+# plt.ylabel('numer zadania')
+# plt.show()
 
 queue = 0
 
@@ -78,20 +78,22 @@ while len(arrival) > 0 or len(done) > 0:
     task_done_history.append(task_done)
 
 plt.plot(queue_history_time1, queue_history1, linestyle='None', marker='o')
-plt.plot(queue_history_time2, queue_history2, linestyle='None', marker='x')
-plt.xlabel('')
+plt.plot(queue_history_time2, queue_history2, linestyle='None', marker='o')
+plt.title(f'lambdaA = {lambdaA}, lambdaD = {lambdaD}')
+plt.xlabel('t')
 plt.ylabel('ilosc zadan w kolejce')
 plt.show()
 
-plt.plot([x for x in range(tasks)], waiting, marker='o')
-plt.xlabel('numer zadania')
+plt.plot(arrival_copy, waiting, marker='o')
+plt.title(f'lambdaA = {lambdaA}, lambdaD = {lambdaD}')
+plt.xlabel('czas wplyniecia zadania')
 plt.ylabel('Czas oczekiwania na wykonanie')
 plt.show()
 
-plt.plot(task_done_history_time, task_done_history, marker='o')
-plt.xlabel('')
-plt.ylabel('Liczba wykonanych zadan')
-plt.show()
+# plt.plot(task_done_history_time, task_done_history, marker='o')
+# plt.xlabel('')
+# plt.ylabel('Liczba wykonanych zadan')
+# plt.show()
 
 def calculate_avg_queue(sequence1, sequence2):
     suma = 0

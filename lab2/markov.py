@@ -54,7 +54,7 @@ def A():
             x.extend([i for i in range(len(y))])
 
             plt.plot(x, y, marker='o')
-            plt.title(f'P[{n}][{m}]')
+            # plt.title(f'P[{n}][{m}]')
             plt.xlabel('N')
             plt.ylabel(f'roznica wartosci elementu macierzy')
 
@@ -62,7 +62,7 @@ def A():
                 y = [pi for i in range(len(y))]
                 plt.plot(x, y, marker='x')
 
-            plt.show()
+    plt.show()
 
 
 def B():
@@ -70,7 +70,7 @@ def B():
     N = 10 ** 4
     values = [0, 1, 2]
 
-    P_new = []
+    P_exp = []
     for node in values:
         visits = [0, 0, 0]
         for i in range(N):
@@ -78,30 +78,33 @@ def B():
             weights = P[choice]
             choice = random.choices(values, weights)[0]
             visits[choice] += 1
-        # print(f'start: {node} = {visits[0] / N} {visits[1] / N} {visits[2] / N}')
-        P_new.append([x / N for x in visits])
+        P_exp.append([x / N for x in visits])
 
-    for i in range(4):
-        P_new = matrix_multi(P_new)
-        P = matrix_multi(P)
+    #
+    # for i in range(4):
+    #     P_exp = matrix_multi(P_exp)
+    #     P = matrix_multi(P)
 
     print('P')
     for i in range(3):
         print(f'{P[i][0]} {P[i][1]} {P[i][2]}')
 
-    print('\nP_new')
+    print('\nP_exp')
     for i in range(3):
-        print(f'{P_new[i][0]} {P_new[i][1]} {P_new[i][2]}')
+        print(f'{P_exp[i][0]} {P_exp[i][1]} {P_exp[i][2]}')
 
-    print('\nporownanie wartosci pi:')
+    print('\nporownanie z wartosciami analitycznymi:')
     for i in range(3):
-        print(f'{P_new[i][0]-P[i][0]} {P_new[i][1]-P[i][1]} {P_new[i][1]-P[i][2]}')
+        print(f'{P_exp[i][0]-P[i][0]} {P_exp[i][1]-P[i][1]} {P_exp[i][2]-P[i][2]}')
 
 
 def CD():
     users = 100
     # start_logged_in_users = random.randint(0, users)
     start_logged_in_users = 0
+
+    point_to_track = 20
+    point_track_history = []
 
     login_probability = 0.2
 
@@ -124,19 +127,7 @@ def CD():
                 logged_in_users -= 1
 
         visits[logged_in_users] += 1
-
-    top_five = []
-    temp_values = copy.deepcopy(visits)
-    for i in range(5):
-        maximum = max(temp_values)
-        top_five.append(maximum)
-        temp_values.remove(maximum)
-    plt.plot([i for i in range(5)], [x / N for x in top_five], marker='o')
-    plt.title(f'Wykres zbieznosci dla 5 najwiekszych wartosci, start logged users: {start_logged_in_users}')
-    plt.xlabel('')
-    plt.ylabel('')
-
-    plt.show()
+        point_track_history.append(visits[point_to_track]/N)
 
     plt.plot([i for i in range(users)], [x / N for x in visits], marker='o')
     plt.title(f'Wykres koncowych wartosci dla wszystkich pi, start logged users: {start_logged_in_users}')
@@ -144,6 +135,15 @@ def CD():
     plt.ylabel('')
 
     plt.show()
+
+    plt.plot([i for i in range(N)], point_track_history, marker='o')
+    plt.title(f'trajektoria dla punktu: {point_to_track}')
+    plt.xlabel('')
+    plt.ylabel('')
+
+    plt.show()
+
+
 
 
 # A()
