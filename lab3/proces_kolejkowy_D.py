@@ -14,8 +14,8 @@ avg_task_amount_in_queue = []
 avg_waiting_time_in_queue = []
 
 for repeats in range(100):
-    # lambdaA += repeats/100
-    lambdaD += repeats/100
+    lambdaA += repeats/100
+    # lambdaD += repeats/100
     # r= lambdaA/lambdaD
 
     tasks = 100
@@ -55,9 +55,16 @@ for repeats in range(100):
     d = done.pop(0)
     arrival.append(arrival[-1]) # duplicate last element no to lose it in the next loop
     done.append(done[-1]) # duplicate last element no to lose it in the next loop
+    one = 0
+    two = 0
+    time_queue = 0
+    waiting_queue = []
+    queue_history = []
     while len(arrival) > 0 or len(done) > 0:
-        if a <= d and len(arrival) > 0 :
+        if a <= d and len(arrival) > 0:
             if len(arrival) > 0:
+                time_queue += waiting[one]
+                one += 1
                 queue += 1
                 queue_history_time1.append(a)
                 queue_history1.append(queue)
@@ -65,18 +72,19 @@ for repeats in range(100):
                 a = arrival.pop(0)
         else:
             if queue > 0:
+                time_queue -= waiting[two]
+                two += 1
                 queue -= 1
-                task_done+=1
+                task_done += 1
                 queue_history_time2.append(d)
                 queue_history2.append(queue)
                 task_done_history_time.append(d)
                 d = done.pop(0)
+        waiting_queue.append(time_queue)
+        queue_history.append(queue)
         task_done_history.append(task_done)
 
-
-    avg_queue1 = calculate_avg_queue(queue_history_time1, queue_history1)
-    avg_queue2 = calculate_avg_queue(queue_history_time2, queue_history2)
-    avg_queue = (avg_queue1 + avg_queue2) / 2
+    avg_queue = calculate_avg_queue(arrival_copy, waiting)
     avg_task_amount_in_queue.append(avg_queue)
 
     avg_waiting_time_in_queue.append(calculate_avg(waiting))

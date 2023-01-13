@@ -53,6 +53,8 @@ waiting_queue2 = []
 one =0
 two =0
 time_queue = 0
+waiting_queue = []
+queue_history = []
 while len(arrival) > 0 or len(done) > 0:
     if a <= d and len(arrival) > 0 :
         if len(arrival) > 0:
@@ -62,7 +64,6 @@ while len(arrival) > 0 or len(done) > 0:
             queue_history_time1.append(a)
             queue_history1.append(queue)
             task_done_history_time.append(a)
-            waiting_queue1.append(time_queue)
             a = arrival.pop(0)
     else:
         if queue > 0:
@@ -73,8 +74,9 @@ while len(arrival) > 0 or len(done) > 0:
             queue_history_time2.append(d)
             queue_history2.append(queue)
             task_done_history_time.append(d)
-            waiting_queue2.append(time_queue)
             d = done.pop(0)
+    waiting_queue.append(time_queue)
+    queue_history.append(queue)
     task_done_history.append(task_done)
 
 plt.plot(queue_history_time1, queue_history1, linestyle='None', marker='o')
@@ -107,9 +109,8 @@ avg_waiting = calculate_avg(waiting)
 # avg_queue = (calculate_avg(queue_history1) + calculate_avg(queue_history2))/2
 # waiting_queue1.extend(waiting_queue2)
 # queue_history1.extend(queue_history2)
-avg_queue1 = calculate_avg_queue(queue_history_time1,queue_history1)
-avg_queue2 = calculate_avg_queue(queue_history_time2,queue_history2)
-avg_queue = (avg_queue1 + avg_queue2)/2
+avg_queue = calculate_avg_queue(arrival_copy,waiting)
+# avg_queue += calculate_avg_queue(done_copy,waiting)
 print(f'Sredni czas spedzony przez zadanie w systemie: {avg_waiting}')
 print(f'Sredni ilosc zadan w kolejce: {avg_queue}')
-print(f'Prawo Little: {avg_waiting * lambdaA} = {avg_queue}')
+print(f'Prawo Little: {avg_waiting} = {avg_queue}')
