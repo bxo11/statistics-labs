@@ -32,7 +32,7 @@ if __name__ == "__main__":
     t_list = [1, 10, 20, 90]
     lenght_list = [6,20,40,120]
     lam = 1
-    hist_bins = [6,20,30,35]
+    hist_bins = [6,20,40,120]
 
     for iter, t in enumerate(t_list):
         events = calculate_avg(poisson_simulation(lam, t))
@@ -61,6 +61,7 @@ if __name__ == "__main__":
         counts, values = np.histogram(events)
         probabilities = counts / len(events)
         # plt.bar(values[:-1], probabilities, width=4)
-        plt.hist(events, density=True, bins=hist_bins[iter])
+        # plt.hist(events, density=True, bins=hist_bins[iter])
+        plt.hist(events, density=True, bins=[x for x in range(hist_bins[iter])])
         plt.title(f't = {t}, rozkład prawdopodobieństwa ilości zdarzeń')
         plt.show()

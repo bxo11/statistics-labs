@@ -11,15 +11,15 @@ from utils import calculate_avg, calculate_sum
 lambdaA = 2.
 lambdaD = 5.
 
-tasks = 10
+tasks = 1000
 arrival = []
 done = []
 waiting = []
 
 for i in range(tasks):
-    n = random.random()  # TODO: rozne czy te same n?
-    tiA = -math.log(n) / lambdaA
     n = random.random()
+    tiA = -math.log(n) / lambdaA
+    # n = random.random()
     tiD = -math.log(n) / lambdaD
     A = (0 if i == 0 else arrival[i - 1]) + tiA
     D = (tiA + tiD if i == 0 else max(done[i - 1], A) + tiD)

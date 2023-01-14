@@ -5,18 +5,18 @@ import random
 from matplotlib import pyplot as plt
 
 # must be float number
-lambdaA = 2.
-lambdaD = 2.5
+lambdaA = 15.
+lambdaD = 8.
 
-tasks = 100
+tasks = 1000
 arrival = []
 done = []
 waiting = []
 
 for i in range(tasks):
-    n = random.random()  # TODO: rozne czy te same n? - raczej to samo
+    n = random.random()
     tiA = -math.log(n) / lambdaA
-    # n = random.random()
+    n = random.random()
     tiD = -math.log(n) / lambdaD
     A = (0 if i == 0 else arrival[i - 1]) + tiA
     D = (tiA + tiD if i == 0 else max(done[i - 1], A) + tiD)

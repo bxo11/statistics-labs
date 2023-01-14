@@ -42,9 +42,9 @@ def A():
     for n in range(3):
         for m in range(3):
             P = [[0.64, 0.32, 0.04], [0.4, 0.5, 0.1], [0.25, 0.50, 0.25]]
-            P_prev = [[0, 0, 0, 0],
-                      [0, 0, 0, 0],
-                      [0, 0, 0, 0]]
+            P_prev = [[0, 0, 0],
+                      [0, 0, 0],
+                      [0, 0, 0]]
             x = []
             y = []
             while (abs(matrix_max(P) - matrix_max(P_prev)) > e):
@@ -67,7 +67,7 @@ def A():
 
 def B():
     P = [[0.64, 0.32, 0.04], [0.4, 0.5, 0.1], [0.25, 0.50, 0.25]]
-    N = 10 ** 4
+    N = 10 ** 2
     values = [0, 1, 2]
 
     P_exp = []
@@ -80,10 +80,12 @@ def B():
             visits[choice] += 1
         P_exp.append([x / N for x in visits])
 
-    #
-    # for i in range(4):
-    #     P_exp = matrix_multi(P_exp)
-    #     P = matrix_multi(P)
+
+    for i in range(4):
+        P = matrix_multi(P)
+
+    for i in range(2):
+        P_exp = matrix_multi(P_exp)
 
     print('P')
     for i in range(3):
@@ -103,13 +105,13 @@ def CD():
     # start_logged_in_users = random.randint(0, users)
     start_logged_in_users = 0
 
-    point_to_track = 20
+    point_to_track = 30
     point_track_history = []
 
     login_probability = 0.2
 
-    logout_probability = 0.5
-    # logout_probability = 1 - (0.008 * start_logged_in_users + 0.1)
+    # logout_probability = 0.5
+    logout_probability = 1 - (0.008 * start_logged_in_users + 0.1)
 
     N = 10 ** 4
 
@@ -127,7 +129,7 @@ def CD():
                 logged_in_users -= 1
 
         visits[logged_in_users] += 1
-        point_track_history.append(visits[point_to_track]/N)
+        point_track_history.append(visits[point_to_track]/(n+1))
 
     plt.plot([i for i in range(users)], [x / N for x in visits], marker='o')
     plt.title(f'Wykres koncowych wartosci dla wszystkich pi, start logged users: {start_logged_in_users}')
@@ -147,5 +149,5 @@ def CD():
 
 
 # A()
-# B()
-CD()
+B()
+# CD()
