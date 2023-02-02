@@ -10,15 +10,15 @@ def plot_geom():
     n = 50  # M
     N = 7  # t
 
-    M = 50  # Total number of items
-    n = 20  # M
-    N = 9  # t
+    N = 50  # Total number of items
+    M = 20  # M
+    t = 12  # t
 
     # Draw the samples from the hypergeometric distribution
-    rv = hypergeom(M, n, N)
-    x = np.arange(0, 10)
+    rv = hypergeom(N, M, t)
+    x = np.arange(0, t + 1)
     pmf_vals = rv.pmf(x)
-    return pmf_vals
+    return x, pmf_vals
 
 
 N = 50  # inaczej N_j / populacja
@@ -26,15 +26,10 @@ t = 20  # ilosc osobnikow zlowionych w danym pomiarze
 repeats = 1000
 population_list = [x for x in range(N)]
 repeats_dict = {n: 0 for n in range(N)}  # calkowita ilosc wylosowanych osobnikow i powtorzenia
-bayes = 0
 
 new_pool = []
 previous_pool = []
 polled_again = []
-prior = 0
-likelihood = 0
-posterior = 0
-to_norm = 0
 M = 0  # calkowita ilosc oznakowamych osob
 m = 0  # liczba ponownie zlowionych osobnikow
 
@@ -69,9 +64,7 @@ plt.title(f'')
 plt.xlabel(f'')
 plt.ylabel(f'')
 
-pmf_vals = plot_geom()
-plt.plot([x for x in range(len(pmf_vals))], pmf_vals, 'o--')
-plt.title("Hypergeometric PMF")
-plt.xlabel("Number of success (k)")
-plt.ylabel("Probability")
+xx, pmf_vals = plot_geom()
+plt.plot(xx, pmf_vals, 'o--')
+
 plt.show()
