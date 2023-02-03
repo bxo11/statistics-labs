@@ -35,6 +35,7 @@ m = 0  # liczba ponownie zlowionych osobnikow
 
 m_history = []
 for j in range(repeats):
+    t = 20
     for i in range(2):
         previous_pool = new_pool
         new_pool = []
