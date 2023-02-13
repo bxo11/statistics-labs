@@ -1,41 +1,30 @@
-import math
 import random
 from math import factorial
 
 import matplotlib.pyplot as plt
-import scipy
 
 
-def binomial(n, kt):
-
-    if kt < 0 or kt > n:
+def binomial(n, k):
+    if k < 0 or k > n:
         return 0
-    if kt == 0 or kt == n:
+    if k == 0 or k == n:
         return 1
-    if kt == 1 or kt == n - 1:
+    if k == 1 or k == n - 1:
         return n
     res = n
-    for ik in range(2, kt + 1):
+    for ik in range(2, k + 1):
         res *= (n - ik + 1) / ik
 
     return round(res)
 
 
-def getPM(m, NJ, ts, Ms):
-    Mm = binomial(Ms, m)
-    NJm = binomial(NJ - Ms, ts - m)
-    Njt = binomial(NJ, ts)
-    if Njt == 0:
-        return 0
-    return (Mm * NJm) / Njt
-
 
 def getPN(m, NJ, t, Ma):
     b = 0
     for i in range(0, N2, 10):
-        pm = getPM(m, i, t, Ma) * Ni[i]
+        pm = hypergeometric_pmf(m, i, t, Ma) * Ni[i]
         b += pm
-    return (getPM(m, NJ, t, Ma) * Ni[NJ]) / b
+    return (hypergeometric_pmf(m, NJ, t, Ma) * Ni[NJ]) / b
 
 
 def binomial_coefficient(n, k):
@@ -43,9 +32,9 @@ def binomial_coefficient(n, k):
 
 
 def hypergeometric_pmf(m, Nj, t, M):
-    a = scipy.special.binom(M, m)
-    b = scipy.special.binom(Nj - M, t - m)
-    c = scipy.special.binom(Nj, t)
+    a = binomial(M, m)
+    b = binomial(Nj - M, t - m)
+    c = binomial(Nj, t)
     if c == 0:
         return 0
     return (a * b) / c
